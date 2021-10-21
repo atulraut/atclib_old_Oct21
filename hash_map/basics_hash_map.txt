@@ -1,0 +1,94 @@
+Hash Tables : Try to use Prime Number for efficient Hash Function e.g. 11, 97
+
+Basics : Resources :
+0] Thareja DS, Kernighan - The Practice of C Programming.
+1] https://www.youtube.com/watch?v=vmGASZxeGVQ
+2] https://leetcode.com/explore/learn/card/hash-table/182/practical-applications/1109/
+3] https://www.cpp.edu/~ftang/courses/CS240/lectures/hashing.htm
+4] https://algs4.cs.princeton.edu/34hash/
+
+Hash Function : Can be used to map data of arbitary size to fixed-size values.
+	        A Hash Function is simply a mathematical formula, which when applied
+		to a key, produces an integer which can be used an an index for the key
+		in the Hash Table.
+Hash Table    : It is a dat structure in which keys are mapped to array position
+                by a hash function.
+Collision     : To avoid used better hash functions.
+Chaining      : Helps to fixed collision, its nothing but linkedlist.
+                Still collision, try to recamput hash.
+
+Ref : https://www.youtube.com/watch?v=92aV0eJEVug&t=53s
+--------------------------------------------------------------------------------
+Data -----> 	    (^}     	     -----> Key
+Large	    	    Hash Fun	    Smaller
+--------------------------------------------------------------------------------
+Converting Data to Key is called Hasing.
+Hash function is Many to 1 Function.
+Key is generally Intger.
+You have 1000 numbers but you want to hash number 10 at a time.
+Then use hashtable of size 10.
+--------------------------------------------------------------------------------
+
+Data / Hash Func - Get Key
+Hash Table :
+Key  	| Value |
+--------------
+8	| abc	|
+2	| efg	|
+5	| kmn	|
+Data                Key
+abc <-- Hashing --> 8
+efg <-- Hashing --> 2
+kmn <-- Hashing --> 5
+--------------------------------------------------------------------------------
+Hashing Functions : 4 Types - Details See R. Thareja, Page - 615.
+1] Division Method       - Using 'Mod'
+2] Multiplication Method - h(x) = L m(kA mod 1)_|
+                         - By Knuth - (sqrt5 - 1 / 2) = 0.6180339887
+3] Mid Square Method     - Square value of Key - K^2
+                         - Extract Middle r bits of above call.
+4] Folding Method        - Divide K into k1,k2,k3..Kn..
+                         - Add individual parts k1+ k2 + k3., Ignore last carry.
+--------------------------------------------------------------------------------
+
+Explain : Ref : The Practice of Programming by Brian Kernighan & Rob Pike
+Github : https://github.com/asankov/the-practice-of-programming
+
+The idea is to pass the key through a hash function to generate a hash value that
+will be evenly distributed through a modest-sized integer range.
+The hash value is used to index a table where the information is stored.
+
+In practice, the hash function is pre-defined and an appropriate size of array
+is allocated, often at compile time.
+
+Each element of the array is a list that chains together the items that share
+a hash value.
+In other words, a hash table of n items is an array of lists whose average length
+is n/(.array size).
+Retrieving an item is an O(1) operation provided we pick a good hash function
+and the lists don't grow too long.
+
+This combination of lookup and optional insertion is common. Without it, there is
+duplication of effort; one must write
+if (lookup("namel') == NULL)
+   add item(newi tem("name" , value)) ;
+and the hash is computed twice.
+
+One of the most common hashing algorithms for strings builds a hash value
+by adding each byte of the string to a multiple of the hash so far.
+The multiplication spreads bits from the new byte through the value so far;
+at the end of the loop, the result should be a thorough mixing of the input bytes.
+Empirically, the values 31 and 37 have proven to be good choices for the multiplier
+in a hash function for ASCII strings.
+
+enum { MULTIPLIER = 31 };
+
+    -------------------
+     A | T  | U  | L
+    -------------------
+h = 65 | 84 | 85 | 76 | ==> 310
+    --------------------
+
+return (h % NHASH);
+
+310 % 16 == 6 <--> Hash Function Returns.
